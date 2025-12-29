@@ -8,11 +8,11 @@ export default function Footer() {
           <div>
             <h3 className="text-2xl font-bold text-[#27F579] mb-4">Lunolab</h3>
             <p className="text-gray-400">
-              Automatyzujemy przyszłość z AI. Tworzymy inteligentne rozwiązania 
+              Automatyzujemy przyszłość z AI. Tworzymy inteligentne rozwiązania
               dla Twojego biznesu.
             </p>
           </div>
-          
+
           <div>
             <h4 className="text-lg font-semibold mb-4">Kontakt</h4>
             <ul className="space-y-2 text-gray-400">
@@ -20,7 +20,7 @@ export default function Footer() {
               <li>Telefon: +48 XXX XXX XXX</li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="text-lg font-semibold mb-4">Szybkie linki</h4>
             <ul className="space-y-2">
@@ -42,7 +42,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        
+
         <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
           <p>&copy; {new Date().getFullYear()} Lunolab. Wszystkie prawa zastrzeżone.</p>
         </div>

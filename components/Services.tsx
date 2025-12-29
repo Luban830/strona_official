@@ -4,6 +4,145 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { NoiseBackground } from '@/components/ui/noise-background'
 
+// Komponent z animowanym przechodzeniem przez kroki z suwakiem
+function AnimatedStepsBox({
+  title,
+  steps,
+  onOpenModal,
+}: {
+  title: string
+  steps: Array<{ step: number; label: string }>
+  onOpenModal: () => void
+}) {
+  const [activeStep, setActiveStep] = useState(0)
+  const stepsCount = steps.length
+  const duration = 2000 // Czas przejścia między krokami w ms
+
+  useEffect(() => {
+    let startTime = performance.now()
+    let animationFrameId: number
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime
+      // Całkowity czas na pełny cykl: przejście przez wszystkie kroki 1→2→3→4→1
+      // Dla 4 kroków: 4 segmenty (1→2, 2→3, 3→4, 4→1)
+      const cycleDuration = stepsCount * duration
+      const cycleProgress = (elapsed % cycleDuration) / cycleDuration
+
+      // Oblicz który segment jest aktualnie aktywny (0 do stepsCount-1)
+      const segmentProgress = cycleProgress * stepsCount
+      const currentSegment = Math.floor(segmentProgress) % stepsCount
+      const segmentPosition = segmentProgress % 1
+
+      // Easing easeInOut cubic dla płynnego przejścia
+      const easeInOut = segmentPosition < 0.5
+        ? 4 * segmentPosition * segmentPosition * segmentPosition
+        : 1 - Math.pow(-2 * segmentPosition + 2, 3) / 2
+
+      // Oblicz aktywny krok
+      // Każdy segment przechodzi od jednego kroku do następnego
+      const fromStep = currentSegment
+      const toStep = (currentSegment + 1) % stepsCount
+
+      // Gdy jesteśmy blisko początku segmentu (< 0.3), pokazujemy krok początkowy
+      // Gdy jesteśmy blisko końca segmentu (> 0.7), pokazujemy krok docelowy
+      // W środku interpolujemy
+      let newActiveStep: number
+      if (segmentPosition < 0.3) {
+        newActiveStep = fromStep
+      } else if (segmentPosition > 0.7) {
+        newActiveStep = toStep
+      } else {
+        // W środku segmentu - interpolacja z easingiem
+        const normalizedProgress = (segmentPosition - 0.3) / 0.4 // Normalizuj 0.3-0.7 do 0-1
+        const easedProgress = normalizedProgress < 0.5
+          ? 4 * normalizedProgress * normalizedProgress * normalizedProgress
+          : 1 - Math.pow(-2 * normalizedProgress + 2, 3) / 2
+        newActiveStep = Math.round(fromStep + (toStep - fromStep) * easedProgress)
+      }
+
+      // Ogranicz do zakresu [0, stepsCount-1]
+      const clampedStep = Math.max(0, Math.min(stepsCount - 1, newActiveStep))
+
+      if (clampedStep !== activeStep) {
+        setActiveStep(clampedStep)
+      }
+
+      animationFrameId = requestAnimationFrame(animate)
+    }
+
+    animationFrameId = requestAnimationFrame(animate)
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId)
+      }
+    }
+  }, [stepsCount, activeStep, duration])
+
+  return (
+    <div className="bg-[#1a1a1a] border border-[#27F579]/20 rounded-2xl p-8">
+        <h4 className="text-2xl font-bold text-[#27F579] mb-8">{title}</h4>
+        <div className="space-y-6">
+        {steps.map((item, index, array) => {
+          const isActive = index === activeStep
+          const isCompleted = index < activeStep
+
+          return (
+            <div key={item.step} className="flex items-start gap-4">
+              <div className="flex flex-col items-center">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-500 ${
+                    isActive
+                      ? 'bg-[#27F579] text-[#151716] shadow-[0_0_20px_rgba(39,245,121,0.8)] scale-110'
+                      : isCompleted
+                        ? 'bg-[#27F579] text-[#151716]'
+                        : 'bg-[#1a7a4a] text-white'
+                  }`}
+                >
+                  {item.step}
+                </div>
+                {index < array.length - 1 && (
+                  <div
+                    className={`w-0.5 flex-1 mt-2 transition-all duration-500 ${
+                      isCompleted || isActive ? 'bg-[#27F579]' : 'bg-[#1a7a4a]'
+                    }`}
+                    style={{ minHeight: '40px' }}
+                  />
+                )}
+              </div>
+              <div className="flex-1 pt-2">
+                <p
+                  className={`text-lg font-medium transition-all duration-500 ${
+                    isActive ? 'text-[#27F579]' : isCompleted ? 'text-[#27F579]' : 'text-[#1a7a4a]'
+                  }`}
+                >
+                  {item.label}
+                </p>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Button */}
+      <div className="mt-8 flex justify-end">
+        <NoiseBackground
+          containerClassName="w-fit"
+          gradientColors={['rgb(39, 245, 121)', 'rgb(26, 122, 74)', 'rgb(39, 245, 121)']}
+        >
+          <button
+            onClick={onOpenModal}
+            className="cursor-pointer rounded-full bg-gradient-to-r from-[#27F579] via-[#27F579] to-[#1a7a4a] px-6 py-3 text-[#151716] font-semibold shadow-[0px_2px_0px_0px_rgba(39,245,121,0.3)_inset,0px_0.5px_1px_0px_rgba(0,0,0,0.3)] transition-all duration-200 active:scale-95 hover:scale-110 hover:brightness-110 hover:shadow-[0px_2px_0px_0px_rgba(39,245,121,0.5)_inset,0px_4px_16px_0px_rgba(39,245,121,0.5)]"
+          >
+            Szczegóły &rarr;
+          </button>
+        </NoiseBackground>
+      </div>
+    </div>
+  )
+}
+
 const longTermDetails = [
   'Indywidualne podejście do Twojego biznesu',
   'Ciągłe wsparcie i optymalizacja rozwiązań',
@@ -82,7 +221,7 @@ export default function Services() {
     } else {
       document.body.style.overflow = 'unset'
     }
-    
+
     return () => {
       document.body.style.overflow = 'unset'
     }
@@ -163,122 +302,28 @@ export default function Services() {
 
           <div className="grid md:grid-cols-2 gap-12 mt-12">
             {/* Long-term collaboration */}
-            <div className="bg-[#1a1a1a] border border-[#27F579]/20 rounded-2xl p-8">
-              <h4 className="text-2xl font-bold text-[#27F579] mb-8">Współpraca długoterminowa</h4>
-              <div className="space-y-6">
-                {[
-                  { step: 1, label: 'Konsultacja', active: true },
-                  { step: 2, label: 'Analiza potrzeb', active: true },
-                  { step: 3, label: 'Wdrożenie', active: true },
-                  { step: 4, label: 'Wsparcie i optymalizacja', active: false },
-                ].map((item, index, array) => (
-                  <div key={item.step} className="flex items-start gap-4">
-                    <div className="flex flex-col items-center">
-                      <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
-                          item.active
-                            ? 'bg-[#27F579] text-[#151716]'
-                            : 'bg-[#1a7a4a] text-white'
-                        }`}
-                      >
-                        {item.step}
-                      </div>
-                      {index < array.length - 1 && (
-                        <div
-                          className={`w-0.5 flex-1 mt-2 ${
-                            item.active ? 'bg-[#27F579]' : 'bg-[#1a7a4a]'
-                          }`}
-                          style={{ minHeight: '40px' }}
-                        />
-                      )}
-                    </div>
-                    <div className="flex-1 pt-2">
-                      <p
-                        className={`text-lg font-medium ${
-                          item.active ? 'text-[#27F579]' : 'text-[#1a7a4a]'
-                        }`}
-                      >
-                        {item.label}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              {/* Button */}
-              <div className="mt-8 flex justify-end">
-                <NoiseBackground
-                  containerClassName="w-fit"
-                  gradientColors={['rgb(39, 245, 121)', 'rgb(26, 122, 74)', 'rgb(39, 245, 121)']}
-                >
-                  <button
-                    onClick={() => setOpenModal('long-term')}
-                    className="cursor-pointer rounded-full bg-gradient-to-r from-[#27F579] via-[#27F579] to-[#1a7a4a] px-6 py-3 text-[#151716] font-semibold shadow-[0px_2px_0px_0px_rgba(39,245,121,0.3)_inset,0px_0.5px_1px_0px_rgba(0,0,0,0.3)] transition-all duration-200 active:scale-95 hover:scale-110 hover:brightness-110 hover:shadow-[0px_2px_0px_0px_rgba(39,245,121,0.5)_inset,0px_4px_16px_0px_rgba(39,245,121,0.5)]"
-                  >
-                    Szczegóły &rarr;
-                  </button>
-                </NoiseBackground>
-              </div>
-            </div>
+            <AnimatedStepsBox
+              title="Współpraca długoterminowa"
+              steps={[
+                { step: 1, label: 'Konsultacja' },
+                { step: 2, label: 'Analiza potrzeb' },
+                { step: 3, label: 'Wdrożenie' },
+                { step: 4, label: 'Wsparcie i optymalizacja' },
+              ]}
+              onOpenModal={() => setOpenModal('long-term')}
+            />
 
             {/* One-time product */}
-            <div className="bg-[#1a1a1a] border border-[#27F579]/20 rounded-2xl p-8 relative">
-              <h4 className="text-2xl font-bold text-[#27F579] mb-8">Dostarczanie jednorazowego produktu</h4>
-              <div className="space-y-6">
-                {[
-                  { step: 1, label: 'Brief', active: true },
-                  { step: 2, label: 'Projektowanie', active: true },
-                  { step: 3, label: 'Realizacja', active: true },
-                  { step: 4, label: 'Dostarczenie', active: false },
-                ].map((item, index, array) => (
-                  <div key={item.step} className="flex items-start gap-4">
-                    <div className="flex flex-col items-center">
-                      <div
-                        className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm ${
-                          item.active
-                            ? 'bg-[#27F579] text-[#151716]'
-                            : 'bg-[#1a7a4a] text-white'
-                        }`}
-                      >
-                        {item.step}
-                      </div>
-                      {index < array.length - 1 && (
-                        <div
-                          className={`w-0.5 flex-1 mt-2 ${
-                            item.active ? 'bg-[#27F579]' : 'bg-[#1a7a4a]'
-                          }`}
-                          style={{ minHeight: '40px' }}
-                        />
-                      )}
-                    </div>
-                    <div className="flex-1 pt-2">
-                      <p
-                        className={`text-lg font-medium ${
-                          item.active ? 'text-[#27F579]' : 'text-[#1a7a4a]'
-                        }`}
-                      >
-                        {item.label}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              
-              {/* Button */}
-              <div className="mt-8 flex justify-end">
-                <NoiseBackground
-                  containerClassName="w-fit"
-                  gradientColors={['rgb(39, 245, 121)', 'rgb(26, 122, 74)', 'rgb(39, 245, 121)']}
-                >
-                  <button
-                    onClick={() => setOpenModal('one-time')}
-                    className="cursor-pointer rounded-full bg-gradient-to-r from-[#27F579] via-[#27F579] to-[#1a7a4a] px-6 py-3 text-[#151716] font-semibold shadow-[0px_2px_0px_0px_rgba(39,245,121,0.3)_inset,0px_0.5px_1px_0px_rgba(0,0,0,0.3)] transition-all duration-200 active:scale-95 hover:scale-110 hover:brightness-110 hover:shadow-[0px_2px_0px_0px_rgba(39,245,121,0.5)_inset,0px_4px_16px_0px_rgba(39,245,121,0.5)]"
-                  >
-                    Szczegóły &rarr;
-                  </button>
-                </NoiseBackground>
-              </div>
-            </div>
+            <AnimatedStepsBox
+              title="Dostarczanie jednorazowego produktu"
+              steps={[
+                { step: 1, label: 'Brief' },
+                { step: 2, label: 'Projektowanie' },
+                { step: 3, label: 'Realizacja' },
+                { step: 4, label: 'Dostarczenie' },
+              ]}
+              onOpenModal={() => setOpenModal('one-time')}
+            />
           </div>
         </div>
 
@@ -303,7 +348,7 @@ export default function Services() {
                   ×
                 </button>
               </div>
-              
+
               <div className="grid md:grid-cols-2 gap-8 items-start">
                 {/* Left side - Text details */}
                 <div className="space-y-4">

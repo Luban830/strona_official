@@ -27,13 +27,13 @@ export default function Navbar() {
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     setIsMobileMenuOpen(false)
-    
+
     // Smooth scroll for anchor links
     if (href.startsWith('/#')) {
       e.preventDefault()
       const targetId = href.replace('/#', '')
       const element = document.getElementById(targetId)
-      
+
       if (element) {
         const offset = 80 // Navbar height
         const elementPosition = element.getBoundingClientRect().top

@@ -42,41 +42,34 @@ function useCountUp(end: number, duration: number = 2000, format: 'number' | 'k'
   useEffect(() => {
     if (!isVisible) return
 
-    const isRising = cycle % 2 === 0
     let startTime: number | null = null
 
     const frame = (currentTime: number) => {
       if (startTime === null) startTime = currentTime
       const elapsed = currentTime - startTime
       const progress = Math.min(elapsed / duration, 1)
-      
+
       // Throttle: aktualizuj tylko co 30ms (około 33 FPS)
       if (currentTime - lastUpdateRef.current > 30) {
         lastUpdateRef.current = currentTime
-        
+
         // Easing function (ease-out)
         const easeOut = 1 - Math.pow(1 - progress, 3)
-        
-        const newCount = isRising 
-          ? Math.floor(easeOut * end)
-          : Math.floor((1 - easeOut) * end)
 
+        // Zawsze rosnąć od 0 do end
+        const newCount = Math.floor(easeOut * end)
         setCount(newCount)
       }
 
       if (progress < 1) {
         animationFrameRef.current = requestAnimationFrame(frame)
       } else {
-        // Animacja zakończona
-        if (isRising) {
-          // Dotarliśmy do końca - czekamy pauseDuration
-          timeoutRef.current = setTimeout(() => {
-            setCycle(c => c + 1)
-          }, pauseDuration)
-        } else {
-          // Wróciliśmy do 0 - od razu zaczynamy rosnąć
-          setCycle(c => c + 1)
-        }
+        // Animacja zakończona - dotarliśmy do końca
+        // Czekamy pauseDuration, potem przeskakujemy do 0 i zaczynamy od nowa
+        timeoutRef.current = setTimeout(() => {
+          setCount(0) // Przeskakujemy do 0 bez animacji
+          setCycle(c => c + 1) // Zwiększamy cycle, aby uruchomić nową animację
+        }, pauseDuration)
       }
     }
 
