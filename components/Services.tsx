@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { NoiseBackground } from '@/components/ui/noise-background'
+import MagicBento from './MagicBento'
 
 // Komponent z animowanym przechodzeniem przez kroki z suwakiem
 function AnimatedStepsBox({
@@ -16,7 +17,7 @@ function AnimatedStepsBox({
 }) {
   const [activeStep, setActiveStep] = useState(0)
   const stepsCount = steps.length
-  const duration = 2000 // Czas przejścia między krokami w ms
+  const duration = 2000
 
   useEffect(() => {
     let startTime = performance.now()
@@ -24,44 +25,25 @@ function AnimatedStepsBox({
 
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime
-      // Całkowity czas na pełny cykl: przejście przez wszystkie kroki 1→2→3→4→1
-      // Dla 4 kroków: 4 segmenty (1→2, 2→3, 3→4, 4→1)
       const cycleDuration = stepsCount * duration
       const cycleProgress = (elapsed % cycleDuration) / cycleDuration
-
-      // Oblicz który segment jest aktualnie aktywny (0 do stepsCount-1)
       const segmentProgress = cycleProgress * stepsCount
       const currentSegment = Math.floor(segmentProgress) % stepsCount
       const segmentPosition = segmentProgress % 1
 
-      // Easing easeInOut cubic dla płynnego przejścia
-      const easeInOut = segmentPosition < 0.5
-        ? 4 * segmentPosition * segmentPosition * segmentPosition
-        : 1 - Math.pow(-2 * segmentPosition + 2, 3) / 2
-
-      // Oblicz aktywny krok
-      // Każdy segment przechodzi od jednego kroku do następnego
-      const fromStep = currentSegment
-      const toStep = (currentSegment + 1) % stepsCount
-
-      // Gdy jesteśmy blisko początku segmentu (< 0.3), pokazujemy krok początkowy
-      // Gdy jesteśmy blisko końca segmentu (> 0.7), pokazujemy krok docelowy
-      // W środku interpolujemy
       let newActiveStep: number
       if (segmentPosition < 0.3) {
-        newActiveStep = fromStep
+        newActiveStep = currentSegment
       } else if (segmentPosition > 0.7) {
-        newActiveStep = toStep
+        newActiveStep = (currentSegment + 1) % stepsCount
       } else {
-        // W środku segmentu - interpolacja z easingiem
-        const normalizedProgress = (segmentPosition - 0.3) / 0.4 // Normalizuj 0.3-0.7 do 0-1
+        const normalizedProgress = (segmentPosition - 0.3) / 0.4
         const easedProgress = normalizedProgress < 0.5
           ? 4 * normalizedProgress * normalizedProgress * normalizedProgress
           : 1 - Math.pow(-2 * normalizedProgress + 2, 3) / 2
-        newActiveStep = Math.round(fromStep + (toStep - fromStep) * easedProgress)
+        newActiveStep = Math.round(currentSegment + ((currentSegment + 1) % stepsCount - currentSegment) * easedProgress)
       }
 
-      // Ogranicz do zakresu [0, stepsCount-1]
       const clampedStep = Math.max(0, Math.min(stepsCount - 1, newActiveStep))
 
       if (clampedStep !== activeStep) {
@@ -81,9 +63,9 @@ function AnimatedStepsBox({
   }, [stepsCount, activeStep, duration])
 
   return (
-    <div className="bg-[#1a1a1a] border border-[#27F579]/20 rounded-2xl p-8">
-        <h4 className="text-2xl font-bold text-[#27F579] mb-8">{title}</h4>
-        <div className="space-y-6">
+    <div className="bg-[#111211] border border-white/10 rounded-2xl p-8">
+      <h4 className="text-2xl font-bold text-[#27F579] mb-8">{title}</h4>
+      <div className="space-y-6">
         {steps.map((item, index, array) => {
           const isActive = index === activeStep
           const isCompleted = index < activeStep
@@ -94,9 +76,9 @@ function AnimatedStepsBox({
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-all duration-500 ${
                     isActive
-                      ? 'bg-[#27F579] text-[#151716] shadow-[0_0_20px_rgba(39,245,121,0.8)] scale-110'
+                      ? 'bg-[#27F579] text-[#0a0b0a] shadow-[0_0_20px_rgba(39,245,121,0.8)] scale-110'
                       : isCompleted
-                        ? 'bg-[#27F579] text-[#151716]'
+                        ? 'bg-[#27F579] text-[#0a0b0a]'
                         : 'bg-[#1a7a4a] text-white'
                   }`}
                 >
@@ -114,7 +96,7 @@ function AnimatedStepsBox({
               <div className="flex-1 pt-2">
                 <p
                   className={`text-lg font-medium transition-all duration-500 ${
-                    isActive ? 'text-[#27F579]' : isCompleted ? 'text-[#27F579]' : 'text-[#1a7a4a]'
+                    isActive ? 'text-[#27F579]' : isCompleted ? 'text-[#27F579]' : 'text-gray-500'
                   }`}
                 >
                   {item.label}
@@ -125,7 +107,6 @@ function AnimatedStepsBox({
         })}
       </div>
 
-      {/* Button */}
       <div className="mt-8 flex justify-end">
         <NoiseBackground
           containerClassName="w-fit"
@@ -133,7 +114,7 @@ function AnimatedStepsBox({
         >
           <button
             onClick={onOpenModal}
-            className="cursor-pointer rounded-full bg-gradient-to-r from-[#27F579] via-[#27F579] to-[#1a7a4a] px-6 py-3 text-[#151716] font-semibold shadow-[0px_2px_0px_0px_rgba(39,245,121,0.3)_inset,0px_0.5px_1px_0px_rgba(0,0,0,0.3)] transition-all duration-200 active:scale-95 hover:scale-110 hover:brightness-110 hover:shadow-[0px_2px_0px_0px_rgba(39,245,121,0.5)_inset,0px_4px_16px_0px_rgba(39,245,121,0.5)]"
+            className="cursor-pointer rounded-full bg-gradient-to-r from-[#27F579] via-[#27F579] to-[#1a7a4a] px-6 py-3 text-[#0a0b0a] font-semibold shadow-[0px_2px_0px_0px_rgba(39,245,121,0.3)_inset,0px_0.5px_1px_0px_rgba(0,0,0,0.3)] transition-all duration-200 active:scale-95 hover:scale-110 hover:brightness-110 hover:shadow-[0px_2px_0px_0px_rgba(39,245,121,0.5)_inset,0px_4px_16px_0px_rgba(39,245,121,0.5)]"
           >
             Szczegóły &rarr;
           </button>
@@ -159,62 +140,9 @@ const oneTimeDetails = [
   'Gotowe rozwiązanie do natychmiastowego użycia',
 ]
 
-const services = [
-  {
-    title: 'Automatyzacja procesów biznesowych',
-    description: 'Tworzymy inteligentne systemy, które automatyzują powtarzalne zadania i optymalizują przepływ pracy w Twojej firmie.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect width="8" height="8" x="3" y="3" rx="2"></rect>
-        <path d="M7 11v4a2 2 0 0 0 2 2h4"></path>
-        <rect width="8" height="8" x="13" y="13" rx="2"></rect>
-      </svg>
-    ),
-    image: 'https://images.unsplash.com/photo-1635776063328-153b13e3c245?w=800&q=80',
-    stat: '40+ godzin tygodniowo',
-  },
-  {
-    title: 'Rozwiązania AI i Machine Learning',
-    description: 'Wdrażamy zaawansowane modele uczenia maszynowego dostosowane do specyfiki Twojego biznesu.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-      </svg>
-    ),
-    image: 'https://images.unsplash.com/photo-1635776062360-af423602aff3?w=800&q=80',
-    stat: '95% dokładności',
-  },
-  {
-    title: 'Integracje systemowe',
-    description: 'Łączymy różne systemy i narzędzia, tworząc spójne środowisko pracy dla Twojego zespołu.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m16 18 6-6-6-6"></path>
-        <path d="m8 6-6 6 6 6"></path>
-      </svg>
-    ),
-    image: 'https://images.unsplash.com/photo-1579548122080-c35fd6820ecb?w=800&q=80',
-    stat: 'Bezproblemowe połączenia',
-  },
-  {
-    title: 'Optymalizacja workflow',
-    description: 'Analizujemy i usprawniamy procesy, eliminując wąskie gardła i zwiększając produktywność.',
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <line x1="12" x2="12" y1="20" y2="10"></line>
-        <line x1="18" x2="18" y1="20" y2="4"></line>
-        <line x1="6" x2="6" y1="20" y2="16"></line>
-      </svg>
-    ),
-    image: 'https://images.unsplash.com/photo-1635776062127-d379bfcba9f8?w=800&q=80',
-    stat: 'Do 300% wydajności',
-  },
-]
-
 export default function Services() {
   const [openModal, setOpenModal] = useState<'long-term' | 'one-time' | null>(null)
 
-  // Block body scroll when modal is open
   useEffect(() => {
     if (openModal) {
       document.body.style.overflow = 'hidden'
@@ -228,71 +156,38 @@ export default function Services() {
   }, [openModal])
 
   return (
-    <section id="uslugi" className="pt-12 pb-24 px-4 sm:px-6 lg:px-8 bg-[#151716]">
+    <section id="uslugi" className="pt-16 pb-24 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a]">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
-            Nasze <span className="text-[#27F579] neon-glow">usługi</span>
-          </h2>
-          <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-            Kompleksowe rozwiązania automatyzacyjne dostosowane do Twoich potrzeb
+        
+        {/* Header */}
+        <div className="mb-16">
+          <p className="text-[#27F579] uppercase tracking-[0.2em] text-sm font-medium mb-4">
+            Usługi
           </p>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
+            Twój Zaufany Partner<br />
+            <span className="text-[#27F579]">w Transformacji AI</span>
+          </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {services.map((service, index) => (
-            <div
-              key={service.title}
-              className="group visible cursor-pointer"
-            >
-              <div
-                className="relative transform overflow-hidden rounded-2xl p-6 shadow-lg"
-                style={{
-                  background: `linear-gradient(rgba(39, 245, 121, 0.25), rgba(21, 23, 22, 0.75)), url(${service.image})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                }}
-              >
-                <div className="relative">
-                  <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#27F579]/20 border border-[#27F579]/30">
-                    <div className="h-6 w-6 text-[#27F579]">
-                      {service.icon}
-                    </div>
-                  </div>
-                  <h3 className="mb-2 font-sans text-lg font-bold text-white">
-                    {service.title}
-                  </h3>
-                  <p className="mb-4 font-sans text-sm text-gray-300 leading-relaxed">
-                    {service.description}
-                  </p>
-                  <div className="flex items-center text-[#27F579]/80">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="mr-1 h-4 w-4"
-                    >
-                      <path d="M12 6v6l4 2"></path>
-                      <circle cx="12" cy="12" r="10"></circle>
-                    </svg>
-                    <span className="font-sans text-xs font-medium">{service.stat}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        {/* Magic Bento Cards */}
+        <MagicBento 
+          textAutoHide={true}
+          enableStars={true}
+          enableSpotlight={true}
+          enableBorderGlow={true}
+          enableTilt={true}
+          enableMagnetism={true}
+          clickEffect={true}
+          spotlightRadius={300}
+          particleCount={12}
+          glowColor="39, 245, 121"
+        />
 
         {/* Ways of collaboration */}
         <div className="mt-24">
           <div className="text-center mb-12">
-            <h3 className="text-3xl sm:text-4xl font-bold mb-4">
+            <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4">
               Działamy na dwa sposoby
             </h3>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
@@ -300,30 +195,37 @@ export default function Services() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12 mt-12">
-            {/* Long-term collaboration */}
-            <AnimatedStepsBox
-              title="Współpraca długoterminowa"
-              steps={[
-                { step: 1, label: 'Konsultacja' },
-                { step: 2, label: 'Analiza potrzeb' },
-                { step: 3, label: 'Wdrożenie' },
-                { step: 4, label: 'Wsparcie i optymalizacja' },
-              ]}
-              onOpenModal={() => setOpenModal('long-term')}
-            />
+          <div className="flex flex-col md:flex-row gap-0 mt-12">
+            <div className="flex-1">
+              <AnimatedStepsBox
+                title="Współpraca długoterminowa"
+                steps={[
+                  { step: 1, label: 'Konsultacja' },
+                  { step: 2, label: 'Analiza potrzeb' },
+                  { step: 3, label: 'Wdrożenie' },
+                  { step: 4, label: 'Wsparcie i optymalizacja' },
+                ]}
+                onOpenModal={() => setOpenModal('long-term')}
+              />
+            </div>
 
-            {/* One-time product */}
-            <AnimatedStepsBox
-              title="Dostarczanie jednorazowego produktu"
-              steps={[
-                { step: 1, label: 'Brief' },
-                { step: 2, label: 'Projektowanie' },
-                { step: 3, label: 'Realizacja' },
-                { step: 4, label: 'Dostarczenie' },
-              ]}
-              onOpenModal={() => setOpenModal('one-time')}
-            />
+            {/* Divider - horizontal on mobile, vertical on desktop */}
+            <div className="flex items-center justify-center py-8 md:py-0 md:px-8">
+              <div className="w-full h-px md:w-px md:h-full min-h-0 md:min-h-[500px] bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#27F579]/40 to-transparent"></div>
+            </div>
+
+            <div className="flex-1">
+              <AnimatedStepsBox
+                title="Dostarczanie jednorazowego produktu"
+                steps={[
+                  { step: 1, label: 'Brief' },
+                  { step: 2, label: 'Projektowanie' },
+                  { step: 3, label: 'Realizacja' },
+                  { step: 4, label: 'Dostarczenie' },
+                ]}
+                onOpenModal={() => setOpenModal('one-time')}
+              />
+            </div>
           </div>
         </div>
 
@@ -334,7 +236,7 @@ export default function Services() {
             onClick={() => setOpenModal(null)}
           >
             <div
-              className="bg-[#1a1a1a] border border-[#27F579]/30 rounded-2xl p-8 max-w-5xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-[#111211] border border-white/10 rounded-2xl p-8 max-w-5xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-center mb-6">
@@ -350,7 +252,6 @@ export default function Services() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-8 items-start">
-                {/* Left side - Text details */}
                 <div className="space-y-4">
                   {(openModal === 'long-term' ? longTermDetails : oneTimeDetails).map((detail, index) => (
                     <div key={index} className="flex items-start gap-4">
@@ -362,7 +263,6 @@ export default function Services() {
                   ))}
                 </div>
 
-                {/* Right side - Image */}
                 <div className="relative flex justify-center items-center">
                   <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
                     <Image
@@ -382,4 +282,3 @@ export default function Services() {
     </section>
   )
 }
-

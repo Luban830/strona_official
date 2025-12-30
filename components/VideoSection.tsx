@@ -1,12 +1,112 @@
 'use client'
 
-interface VideoSectionProps {
-  videoUrl?: string
-}
+import { useRef, useState, useEffect, useCallback } from 'react'
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react'
 
-export default function VideoSection({ videoUrl }: VideoSectionProps) {
+export default function VideoSection() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isMuted, setIsMuted] = useState(false) // Start with sound ON
+  const hasAutoplayedRef = useRef(false)
+  const isUserPausedRef = useRef(false)
+
+  const togglePlay = useCallback(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (video.paused) {
+      video.play().then(() => {
+        setIsPlaying(true)
+        isUserPausedRef.current = false
+      }).catch(() => {
+        // Autoplay blocked
+      })
+    } else {
+      video.pause()
+      setIsPlaying(false)
+      isUserPausedRef.current = true
+    }
+  }, [])
+
+  const toggleMute = useCallback(() => {
+    const video = videoRef.current
+    if (!video) return
+    
+    video.muted = !video.muted
+    setIsMuted(video.muted)
+  }, [])
+
+  // Autoplay with sound when visible
+  useEffect(() => {
+    const video = videoRef.current
+    const container = containerRef.current
+    if (!video || !container) return
+
+    const tryAutoplay = async () => {
+      if (hasAutoplayedRef.current || isUserPausedRef.current) return
+      
+      // Try with sound first
+      try {
+        video.muted = false
+        setIsMuted(false)
+        await video.play()
+        setIsPlaying(true)
+        hasAutoplayedRef.current = true
+      } catch {
+        // Browser blocked - try muted as fallback
+        try {
+          video.muted = true
+          setIsMuted(true)
+          await video.play()
+          setIsPlaying(true)
+          hasAutoplayedRef.current = true
+        } catch {
+          // Autoplay completely blocked
+        }
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isUserPausedRef.current) {
+            tryAutoplay()
+          } else if (!entry.isIntersecting) {
+            video.pause()
+            setIsPlaying(false)
+          }
+        })
+      },
+      { threshold: 0.3 }
+    )
+
+    observer.observe(container)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [])
+
+  // Sync state with video events
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    const onPlay = () => setIsPlaying(true)
+    const onPause = () => setIsPlaying(false)
+
+    video.addEventListener('play', onPlay)
+    video.addEventListener('pause', onPause)
+
+    return () => {
+      video.removeEventListener('play', onPlay)
+      video.removeEventListener('pause', onPause)
+    }
+  }, [])
+
   return (
-    <section id="video" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#151716]">
+    <section id="video" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a]">
       <div className="max-w-5xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4">
@@ -17,30 +117,63 @@ export default function VideoSection({ videoUrl }: VideoSectionProps) {
           </p>
         </div>
 
-        <div className="relative aspect-video bg-[#2a2a2a] border border-gray-700 rounded-lg overflow-hidden">
-          {videoUrl ? (
-            <iframe
-              src={videoUrl}
-              title="Lunolab - Film o firmie"
-              className="absolute inset-0 w-full h-full"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center text-gray-500">
-                <div className="text-6xl mb-4">🎬</div>
-                <p className="text-lg">Tutaj zostanie umieszczony film o firmie</p>
-                <p className="text-sm text-gray-600 mt-2">
-                  Dodaj URL filmu (YouTube/Vimeo) w komponencie VideoSection
-                </p>
+        <div 
+          ref={containerRef}
+          className="relative aspect-video bg-[#111211] border border-[#27F579]/20 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 group"
+        >
+          <video
+            ref={videoRef}
+            src="/film.MOV"
+            className="absolute inset-0 w-full h-full object-cover"
+            loop
+            playsInline
+            preload="auto"
+          />
+          
+          {/* Clickable overlay for play/pause */}
+          <div 
+            className="absolute inset-0 cursor-pointer z-10"
+            onClick={togglePlay}
+          />
+          
+          {/* Overlay gradient */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-20" />
+          
+          {/* Play button overlay - visible when paused */}
+          {!isPlaying && (
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#27F579] flex items-center justify-center shadow-lg shadow-[#27F579]/30">
+                <Play className="w-8 h-8 sm:w-10 sm:h-10 text-[#0a0b0a] ml-1" fill="#0a0b0a" />
               </div>
             </div>
           )}
+
+          {/* Controls */}
+          <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-40">
+            <button
+              onClick={(e) => { e.stopPropagation(); togglePlay(); }}
+              className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors"
+            >
+              {isPlaying ? (
+                <Pause className="w-5 h-5 text-white" />
+              ) : (
+                <Play className="w-5 h-5 text-white ml-0.5" />
+              )}
+            </button>
+
+            <button
+              onClick={(e) => { e.stopPropagation(); toggleMute(); }}
+              className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center hover:bg-white/20 transition-colors"
+            >
+              {isMuted ? (
+                <VolumeX className="w-5 h-5 text-white" />
+              ) : (
+                <Volume2 className="w-5 h-5 text-white" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
     </section>
   )
 }
-
-

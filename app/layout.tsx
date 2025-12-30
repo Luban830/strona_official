@@ -31,7 +31,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${montserrat.variable} font-sans antialiased bg-[#151716] text-white`}
+        className={`${montserrat.variable} font-sans antialiased bg-[#0a0b0a] text-white`}
         style={{ fontFamily: '"Zalando Sans Expanded", "Montserrat", sans-serif' }}
       >
         <Navbar />

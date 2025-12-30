@@ -78,7 +78,7 @@ export default function UmowSpotkaniePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-[#151716] pt-20">
+    <div className="min-h-screen bg-[#0a0b0a] pt-20">
       <main className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div

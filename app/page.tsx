@@ -8,9 +8,9 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       <Hero />
+      <VideoSection />
       <Services />
       <CaseStudies />
-      <VideoSection />
       <Footer />
     </main>
   )

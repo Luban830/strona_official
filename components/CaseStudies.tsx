@@ -165,7 +165,7 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 
 export default function CaseStudies() {
   return (
-    <section id="case-studies" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-[#151716]">
+    <section id="case-studies" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a]">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

@@ -165,7 +165,7 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 
 export default function ProjektyPage() {
   return (
-    <div className="min-h-screen bg-[#151716] pt-20">
+    <div className="min-h-screen bg-[#0a0b0a] pt-20">
       <main className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <motion.div

@@ -1,229 +1,109 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { TextEffect } from '@/components/core/text-effect'
 import Image from 'next/image'
 import Link from 'next/link'
-import { NeonGradientCard } from '@/components/ui/neon-gradient-card'
-import { useEffect, useState, useRef, useMemo } from 'react'
-
-// Zoptymalizowany hook do animacji licznika z pętlą
-function useCountUp(end: number, duration: number = 2000, format: 'number' | 'k' | 'percent' = 'number', pauseDuration: number = 5000) {
-  const [count, setCount] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
-  const [cycle, setCycle] = useState(0) // Używamy cycle zamiast isRising dla lepszej kontroli
-  const ref = useRef<HTMLDivElement>(null)
-  const animationFrameRef = useRef<number | null>(null)
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
-  const lastUpdateRef = useRef(0)
-
-  useEffect(() => {
-    const currentRef = ref.current
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setIsVisible(true)
-        }
-      },
-      { threshold: 0.1 }
-    )
-
-    if (currentRef) {
-      observer.observe(currentRef)
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef)
-      }
-    }
-  }, [isVisible])
-
-  useEffect(() => {
-    if (!isVisible) return
-
-    let startTime: number | null = null
-
-    const frame = (currentTime: number) => {
-      if (startTime === null) startTime = currentTime
-      const elapsed = currentTime - startTime
-      const progress = Math.min(elapsed / duration, 1)
-
-      // Throttle: aktualizuj tylko co 30ms (około 33 FPS)
-      if (currentTime - lastUpdateRef.current > 30) {
-        lastUpdateRef.current = currentTime
-
-        // Easing function (ease-out)
-        const easeOut = 1 - Math.pow(1 - progress, 3)
-
-        // Zawsze rosnąć od 0 do end
-        const newCount = Math.floor(easeOut * end)
-        setCount(newCount)
-      }
-
-      if (progress < 1) {
-        animationFrameRef.current = requestAnimationFrame(frame)
-      } else {
-        // Animacja zakończona - dotarliśmy do końca
-        // Czekamy pauseDuration, potem przeskakujemy do 0 i zaczynamy od nowa
-        timeoutRef.current = setTimeout(() => {
-          setCount(0) // Przeskakujemy do 0 bez animacji
-          setCycle(c => c + 1) // Zwiększamy cycle, aby uruchomić nową animację
-        }, pauseDuration)
-      }
-    }
-
-    animationFrameRef.current = requestAnimationFrame(frame)
-
-    return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current)
-      }
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
-      }
-    }
-  }, [isVisible, cycle, end, duration, pauseDuration])
-
-  // Memoizacja formatowania
-  const formattedCount = useMemo(() => {
-    if (format === 'k') {
-      return `${count}K+`
-    }
-    if (format === 'percent') {
-      return `${count}%`
-    }
-    return `${count}+`
-  }, [count, format])
-
-  return { count: formattedCount, ref }
-}
+import { ArrowUpRight, ArrowRight, Sparkles } from 'lucide-react'
 
 export default function Hero() {
-  const opacity = 0.01
-  const count1 = useCountUp(500, 2000, 'number')
-  const count2 = useCountUp(250, 2000, 'k')
-  const count3 = useCountUp(95, 2000, 'percent')
-
   return (
-    <section className="min-h-screen lg:min-h-[80vh] xl:min-h-[70vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden pt-16 pb-12 lg:pt-24 lg:pb-20">
-      {/* Noise effect background */}
-      <div
-        className="absolute top-0 left-0 w-full h-full content-[''] z-0 pointer-events-none bg-[url('https://www.ui-layouts.com/noise.gif')]"
-        style={{ opacity: opacity }}
-      ></div>
-
-      {/* Grid pattern with radial mask */}
-      <div className="absolute bottom-0 left-[-2px] top-[-1px] right-0 h-[500px] bg-[linear-gradient(to_right,#27F57915_1px,transparent_1px),linear-gradient(to_bottom,#27F57915_1px,transparent_1px)] bg-[length:35px_34px] mask-[radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] z-0"></div>
+    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-24 bg-[#0a0b0a]">
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#27F57910_1px,transparent_1px),linear-gradient(to_bottom,#27F57910_1px,transparent_1px)] bg-[length:60px_60px]"></div>
+      
+      {/* Green gradient blob */}
+      <div className="absolute top-20 right-0 w-[600px] h-[600px] bg-gradient-to-br from-[#27F579]/15 via-[#27F579]/5 to-transparent rounded-full blur-3xl"></div>
+      
+      {/* Bottom gradient */}
+      <div className="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-[#0a0b0a] to-transparent"></div>
 
       <div className="max-w-7xl mx-auto w-full relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-          {/* Hero text */}
-          <div className="w-full lg:w-1/2">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-0 text-left mb-12"
-            >
-              <h1
-                className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight"
-                style={{ fontSize: '53px', width: '780px', maxWidth: '100%', margin: 0, wordBreak: 'keep-all', whiteSpace: 'normal' }}
-              >
-                <TextEffect per="char" preset="fade">
-                  Zyskaj przewagę z AI
-                </TextEffect>
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+          
+          {/* Left side - Content */}
+          <div className="w-full lg:w-1/2 space-y-8">
+            
+            {/* Badge */}
+            <div className="inline-flex items-center gap-3 bg-white/5 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10">
+              <div className="flex -space-x-2">
+                <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#27F579] to-[#1a7a4a] flex items-center justify-center text-[#151716] text-xs font-bold">L</div>
+                <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center">
+                  <Sparkles className="w-3.5 h-3.5 text-[#27F579]" />
+                </div>
+                <div className="w-7 h-7 rounded-full bg-[#27F579]/20 flex items-center justify-center text-[#27F579] text-xs font-bold border border-[#27F579]/30">AI</div>
+              </div>
+              <span className="text-gray-400 text-sm font-medium">
+                <span className="font-bold text-white">Nowa era</span> automatyzacji biznesu
+              </span>
+            </div>
+
+            {/* Headline */}
+            <div>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-[1.1] text-white">
+                Automatyzacja
+                <br />
+                <span className="bg-gradient-to-r from-[#27F579] via-[#20c46a] to-[#1a7a4a] bg-clip-text text-transparent">
+                  z AI dla Firm
+                </span>
               </h1>
-            </motion.div>
-            <p className="text-xl sm:text-2xl text-white leading-relaxed text-left max-w-3xl -mt-6" style={{ fontSize: '25px' }}>
-              Lunolab tworzy zaawansowane rozwiązania automatyzacyjne, które
-              przyspieszają Twoje procesy biznesowe i zwiększają efektywność w Twojej firmie.
+            </div>
+
+            {/* Description */}
+            <p className="text-lg sm:text-xl text-gray-400 leading-relaxed max-w-lg border-l-4 border-[#27F579]/40 pl-4">
+              Odblokuj potencjał swojej firmy. Kompleksowe rozwiązania AI stworzone z myślą o nowoczesnych przedsiębiorstwach.
             </p>
-            <div className="mt-8">
-              <Link
-                href="/umow-spotkanie"
-                className="inline-block cursor-pointer rounded-full bg-gradient-to-r from-[#27F579] via-[#27F579] to-[#1a7a4a] px-8 py-4 text-[#151716] font-semibold text-lg shadow-[0px_2px_0px_0px_rgba(39,245,121,0.3)_inset,0px_0.5px_1px_0px_rgba(0,0,0,0.3)] transition-all duration-200 active:scale-95 hover:scale-105 hover:shadow-[0px_2px_0px_0px_rgba(39,245,121,0.5)_inset,0px_4px_12px_0px_rgba(39,245,121,0.4)] hover:brightness-110"
-              >
-                Rozwijaj swoją firmę z AI
+
+            {/* Buttons */}
+            <div className="flex flex-wrap gap-4">
+              <Link href="/umow-spotkanie">
+                <button className="group flex items-center gap-3 bg-gradient-to-r from-[#27F579] to-[#20c46a] text-[#151716] font-semibold px-7 py-4 rounded-full shadow-lg shadow-[#27F579]/25 hover:shadow-xl hover:shadow-[#27F579]/30 transition-all duration-300 hover:scale-105">
+                  Darmowa konsultacja
+                  <span className="w-8 h-8 bg-[#0a0b0a]/20 rounded-full flex items-center justify-center group-hover:bg-[#0a0b0a]/30 transition-colors">
+                    <ArrowUpRight className="w-4 h-4" />
+                  </span>
+                </button>
               </Link>
+              
+              <Link href="#case-studies">
+                <button className="group flex items-center gap-3 bg-white/5 text-white font-semibold px-7 py-4 rounded-full border border-white/20 hover:border-[#27F579]/50 hover:bg-[#27F579]/10 transition-all duration-300">
+                  Zobacz projekty
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </Link>
+            </div>
+
+            {/* Stats */}
+            <div className="flex flex-wrap gap-8 sm:gap-12 pt-8 border-t border-white/10">
+              <div>
+                <div className="text-xs uppercase tracking-wider text-gray-500 mb-1">Czas wdrożenia</div>
+                <div className="text-xl font-bold text-white">2-4 tygodnie</div>
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-wider text-gray-500 mb-1">Oszczędności</div>
+                <div className="text-xl font-bold text-white">Do 80%</div>
+              </div>
+              <div>
+                <div className="text-xs uppercase tracking-wider text-gray-500 mb-1">Wsparcie</div>
+                <div className="text-xl font-bold text-white">24/7</div>
+              </div>
             </div>
           </div>
 
-          {/* Hero image */}
+          {/* Right side - Image */}
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
-            <div
-              className="relative w-full max-w-[500px] aspect-[4/3] rounded-lg overflow-hidden"
-              style={{ marginTop: '8px' }}
-            >
+            <div className="relative w-full max-w-[650px] aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
               <Image
                 src="/1.jpg"
-                alt="Lunolab"
+                alt="Lunolab AI Automation"
                 fill
-                priority
-                className="object-cover"
-                style={{ borderWidth: '0px', borderStyle: 'none', borderImage: 'none' }}
+                className="object-contain"
               />
+              {/* Green gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#27F579]/20 via-transparent to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0b0a]/60"></div>
             </div>
           </div>
         </div>
-
-        {/* Stats Cards */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-16 lg:mt-24 flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center w-full"
-        >
-          {/* Card 1 - Czas zaoszczędzony */}
-          <NeonGradientCard
-            className="w-full sm:w-auto sm:flex-1 max-w-[320px]"
-            borderRadius={16}
-            borderSize={2}
-            neonColors={{
-              firstColor: "#27F579",
-              secondColor: "#00FFF1",
-            }}
-          >
-            <div className="flex flex-col items-center justify-center gap-2 h-full min-h-[120px]">
-              <div ref={count1.ref} className="text-2xl sm:text-3xl font-bold text-[#27F579]">{count1.count}</div>
-              <div className="text-xs sm:text-sm text-center leading-tight text-white">godzin zaoszczędzonych miesięcznie</div>
-            </div>
-          </NeonGradientCard>
-
-          {/* Card 2 - Pieniądze zaoszczędzone */}
-          <NeonGradientCard
-            className="w-full sm:w-auto sm:flex-1 max-w-[320px]"
-            borderRadius={16}
-            borderSize={2}
-            neonColors={{
-              firstColor: "#27F579",
-              secondColor: "#00FFF1",
-            }}
-          >
-            <div className="flex flex-col items-center justify-center gap-2 h-full min-h-[120px]">
-              <div ref={count2.ref} className="text-2xl sm:text-3xl font-bold text-[#27F579]">{count2.count}</div>
-              <div className="text-xs sm:text-sm text-center leading-tight text-white">PLN zaoszczędzonych rocznie</div>
-            </div>
-          </NeonGradientCard>
-
-          {/* Card 3 - Redukcja błędów */}
-          <NeonGradientCard
-            className="w-full sm:w-auto sm:flex-1 max-w-[320px]"
-            borderRadius={16}
-            borderSize={2}
-            neonColors={{
-              firstColor: "#27F579",
-              secondColor: "#00FFF1",
-            }}
-          >
-            <div className="flex flex-col items-center justify-center gap-2 h-full min-h-[120px]">
-              <div ref={count3.ref} className="text-2xl sm:text-3xl font-bold text-[#27F579]">{count3.count}</div>
-              <div className="text-xs sm:text-sm text-center leading-tight text-white">redukcja błędów w procesach</div>
-            </div>
-          </NeonGradientCard>
-        </motion.div>
       </div>
     </section>
   )
 }
-
