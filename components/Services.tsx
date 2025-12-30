@@ -158,7 +158,7 @@ export default function Services() {
   return (
     <section id="uslugi" className="pt-16 pb-24 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a]">
       <div className="max-w-7xl mx-auto">
-        
+
         {/* Header */}
         <div className="mb-16">
           <p className="text-[#27F579] uppercase tracking-[0.2em] text-sm font-medium mb-4">
@@ -171,7 +171,7 @@ export default function Services() {
         </div>
 
         {/* Magic Bento Cards */}
-        <MagicBento 
+        <MagicBento
           textAutoHide={true}
           enableStars={true}
           enableSpotlight={true}

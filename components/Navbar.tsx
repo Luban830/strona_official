@@ -32,8 +32,15 @@ export default function Navbar() {
     if (href.startsWith('/#')) {
       e.preventDefault()
       const targetId = href.replace('/#', '')
-      const element = document.getElementById(targetId)
 
+      // If we're on a different page, navigate to home with hash
+      if (pathname !== '/') {
+        window.location.href = '/#' + targetId
+        return
+      }
+
+      // We're on the home page, scroll to element
+      const element = document.getElementById(targetId)
       if (element) {
         const offset = 80 // Navbar height
         const elementPosition = element.getBoundingClientRect().top
