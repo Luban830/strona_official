@@ -203,7 +203,7 @@ function StatCard({ label, value, particleCount = DEFAULT_PARTICLE_COUNT, glowCo
 
 export default function StatsSection() {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a] relative">
+    <section className="-mt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a] relative">
       {/* Bottom gradient */}
       <div className="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-[#0a0b0a] to-transparent pointer-events-none"></div>
 

@@ -6,7 +6,7 @@ import { ArrowUpRight, ArrowRight } from 'lucide-react'
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden pt-24 pb-16 lg:pt-32 lg:pb-24 bg-[#0a0b0a]">
+    <section className="min-h-screen flex items-center justify-center px-4 sm:px-6 lg:px-8 relative overflow-hidden pt-6 pb-0 lg:pt-8 lg:pb-0 bg-[#0a0b0a]">
       {/* Subtle grid pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#27F57910_1px,transparent_1px),linear-gradient(to_bottom,#27F57910_1px,transparent_1px)] bg-[length:60px_60px]"></div>
 
