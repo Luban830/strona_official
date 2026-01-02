@@ -123,13 +123,6 @@ export default function Feature3() {
 
           {/* Center column */}
           <div className="order-[1] mb-6 self-center sm:order-[0] md:mb-0">
-            <div className="bg-[#111211] text-white border border-white/10 relative mx-auto mb-4.5 w-fit rounded-full rounded-bl-[2px] px-4 py-2 text-sm">
-              <span className="relative z-1 flex items-center gap-2 text-[#27F579] font-semibold">
-                Usługi
-              </span>
-              <span className="from-[#27F579]/0 via-[#27F579] to-[#27F579]/0 absolute -bottom-px left-1/2 h-px w-2/5 -translate-x-1/2 bg-gradient-to-r"></span>
-              <span className="absolute inset-0 bg-[radial-gradient(30%_40%_at_50%_100%,rgba(39,245,121,0.25)_0%,transparent_100%)]"></span>
-            </div>
             <h2 className="text-white mb-2 text-center text-2xl sm:mb-2.5 md:text-[2rem] font-bold">
               Nasze <span className="bg-gradient-to-r from-[#27F579] via-[#20c46a] to-[#1a7a4a] bg-clip-text text-transparent">Rozwiązania</span>
             </h2>

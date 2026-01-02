@@ -204,7 +204,7 @@ function StatCard({ label, value, particleCount = DEFAULT_PARTICLE_COUNT, glowCo
 
 export default function StatsSection() {
   return (
-    <section className="-mt-16 sm:-mt-24 lg:-mt-28 pb-16 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a] relative z-20">
+    <section className="-mt-32 sm:-mt-40 lg:-mt-48 pb-16 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a] relative z-20">
       {/* Bottom gradient */}
       <div className="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-[#0a0b0a] to-transparent pointer-events-none"></div>
 
@@ -271,6 +271,13 @@ export default function StatsSection() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
+        {/* Info text */}
+        <div className="mb-6 sm:mb-8 text-center">
+          <p className="text-sm sm:text-base text-gray-400 italic">
+            Poniższe dane opierają się wyłącznie na zrealizowanych przez nas projektach
+          </p>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
           <div className="flex-1 min-w-0">
             <StatCard
