@@ -11,8 +11,68 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Lunolab - Automatyzacje procesów w AI",
-  description: "Lunolab - Zaawansowane automatyzacje procesów w sztucznej inteligencji dla Twojej firmy",
+  metadataBase: new URL('https://lunolab.pl'),
+  title: {
+    default: "Lunolab - Automatyzacje procesów w AI dla Firm",
+    template: "%s | Lunolab"
+  },
+  description: "Lunolab oferuje zaawansowane automatyzacje procesów biznesowych z wykorzystaniem sztucznej inteligencji. Automatyzujemy zadania powtarzalne, optymalizujemy workflow i zwiększamy efektywność Twojej firmy.",
+  keywords: [
+    "automatyzacja AI",
+    "automatyzacja procesów",
+    "AI dla firm",
+    "automatyzacja biznesu",
+    "sztuczna inteligencja",
+    "automatyzacja workflow",
+    "automatyzacja zadań",
+    "AI automatyzacja",
+    "inteligentna automatyzacja",
+    "automatyzacja procesów biznesowych"
+  ],
+  authors: [{ name: "Lunolab" }],
+  creator: "Lunolab",
+  publisher: "Lunolab",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    type: "website",
+    locale: "pl_PL",
+    url: "https://lunolab.pl",
+    siteName: "Lunolab",
+    title: "Lunolab - Automatyzacje procesów w AI dla Firm",
+    description: "Zaawansowane automatyzacje procesów biznesowych z wykorzystaniem sztucznej inteligencji. Automatyzujemy zadania powtarzalne i optymalizujemy workflow Twojej firmy.",
+    images: [
+      {
+        url: "/og-image.svg",
+        width: 1200,
+        height: 630,
+        alt: "Lunolab - Automatyzacja procesów AI dla firm",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lunolab - Automatyzacje procesów w AI dla Firm",
+    description: "Zaawansowane automatyzacje procesów biznesowych z wykorzystaniem sztucznej inteligencji.",
+    images: ["/og-image.svg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: "https://lunolab.pl",
+  },
 };
 
 export default function RootLayout({

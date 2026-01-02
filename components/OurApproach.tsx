@@ -15,9 +15,10 @@ export default function OurApproach() {
             <div className="relative w-full max-w-[500px] sm:max-w-[600px] lg:max-w-[650px] aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10">
               <Image
                 src="/15-DSCF8700.jpg"
-                alt="Nasze podejście - współpraca z klientami"
+                alt="Nasze podejście do współpracy z klientami - Lunolab automatyzacja AI"
                 fill
                 className="object-cover"
+                loading="lazy"
                 unoptimized
               />
               {/* Green gradient overlay */}
@@ -40,7 +41,7 @@ export default function OurApproach() {
               <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed">
                 Ceny ustalamy w zależności od projektu i ścieżki wybranej przez klienta. Staramy się iść na kompromis, ponieważ najbardziej nam zależy, żeby współpracować z naszymi klientami.
               </p>
-              
+
               <p className="text-base sm:text-lg md:text-xl text-gray-300 leading-relaxed">
                 Dla nas to <span className="text-[#27F579] font-semibold">współpraca</span>, a nie wynajem. Budujemy długoterminowe relacje partnerskie, gdzie razem pracujemy nad osiągnięciem Twoich celów biznesowych.
               </p>

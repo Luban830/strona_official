@@ -25,17 +25,17 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-4">Szybkie linki</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#uslugi" className="text-gray-400 hover:text-[#27F579] transition-colors">
+                <a href="#uslugi" className="text-gray-400 hover:text-[#27F579] transition-colors" aria-label="Przejdź do sekcji Usługi">
                   Usługi
                 </a>
               </li>
               <li>
-                <a href="#case-studies" className="text-gray-400 hover:text-[#27F579] transition-colors">
+                <a href="#case-studies" className="text-gray-400 hover:text-[#27F579] transition-colors" aria-label="Przejdź do sekcji Projekty">
                   Projekty
                 </a>
               </li>
               <li>
-                <a href="#video" className="text-gray-400 hover:text-[#27F579] transition-colors">
+                <a href="#video" className="text-gray-400 hover:text-[#27F579] transition-colors" aria-label="Przejdź do sekcji O nas">
                   O nas
                 </a>
               </li>

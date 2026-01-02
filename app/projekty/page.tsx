@@ -175,6 +175,8 @@ export default function ProjektyPage() {
                     ? 'bg-[#27F579] text-[#0a0b0a]'
                     : 'bg-[#111211] text-white border-2 border-white/20 hover:border-[#27F579]/50'
                 }`}
+                aria-label={`Filtruj projekty według kategorii ${category}`}
+                aria-pressed={selectedCategory === category}
               >
                 {category}
               </button>
@@ -199,9 +201,10 @@ export default function ProjektyPage() {
                       >
                         <Image
                           src={image}
-                          alt={`${project.title} screenshot ${index + 1}`}
+                          alt={`${project.title} - Projekt automatyzacji AI - Zrzut ekranu ${index + 1}`}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-300"
+                          loading="lazy"
                           unoptimized
                         />
                       </div>
@@ -297,7 +300,7 @@ export default function ProjektyPage() {
                     >
                       <Image
                         src={image}
-                        alt={`${selectedProject.title} screenshot ${index + 1}`}
+                        alt={`${selectedProject.title} - Projekt automatyzacji AI - Zrzut ekranu rozwiązania ${index + 1}`}
                         fill
                         className="object-cover"
                         unoptimized

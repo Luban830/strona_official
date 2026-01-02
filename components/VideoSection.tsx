@@ -33,7 +33,7 @@ export default function VideoSection() {
   const toggleMute = useCallback(() => {
     const video = videoRef.current
     if (!video) return
-    
+
     video.muted = !video.muted
     setIsMuted(video.muted)
   }, [])
@@ -46,7 +46,7 @@ export default function VideoSection() {
 
     const tryAutoplay = async () => {
       if (hasAutoplayedRef.current || isUserPausedRef.current) return
-      
+
       // Try with sound first
       try {
         video.muted = false
@@ -114,7 +114,7 @@ export default function VideoSection() {
       <div className="absolute top-8 left-4 sm:left-8 opacity-15 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={70}
           height={70}
           className="w-10 h-10 sm:w-14 sm:h-14 -rotate-12"
@@ -124,7 +124,7 @@ export default function VideoSection() {
       <div className="absolute top-1/4 left-12 sm:left-20 opacity-12 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={50}
           height={50}
           className="w-8 h-8 sm:w-10 sm:h-10 rotate-30"
@@ -134,7 +134,7 @@ export default function VideoSection() {
       <div className="absolute top-1/6 left-20 sm:left-28 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={40}
           height={40}
           className="w-6 h-6 sm:w-8 sm:h-8 rotate-60"
@@ -144,7 +144,7 @@ export default function VideoSection() {
       <div className="absolute bottom-8 right-4 sm:right-8 opacity-15 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={70}
           height={70}
           className="w-10 h-10 sm:w-14 sm:h-14 rotate-12"
@@ -154,7 +154,7 @@ export default function VideoSection() {
       <div className="absolute bottom-1/4 right-12 sm:right-20 opacity-12 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={50}
           height={50}
           className="w-8 h-8 sm:w-10 sm:h-10 -rotate-30"
@@ -164,7 +164,7 @@ export default function VideoSection() {
       <div className="absolute bottom-1/6 right-20 sm:right-28 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={40}
           height={40}
           className="w-6 h-6 sm:w-8 sm:h-8 -rotate-60"
@@ -174,7 +174,7 @@ export default function VideoSection() {
       <div className="absolute top-1/2 left-8 sm:left-16 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={40}
           height={40}
           className="w-6 h-6 sm:w-8 sm:h-8 rotate-60"
@@ -184,7 +184,7 @@ export default function VideoSection() {
       <div className="absolute top-2/3 right-16 sm:right-24 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={35}
           height={35}
           className="w-5 h-5 sm:w-7 sm:h-7 rotate-120"
@@ -202,7 +202,7 @@ export default function VideoSection() {
           </p>
         </div>
 
-        <div 
+        <div
           ref={containerRef}
           className="relative aspect-video bg-[#111211] border border-[#27F579]/20 rounded-2xl overflow-hidden shadow-2xl shadow-black/50 group"
         >
@@ -214,16 +214,16 @@ export default function VideoSection() {
             playsInline
             preload="auto"
           />
-          
+
           {/* Clickable overlay for play/pause */}
-          <div 
+          <div
             className="absolute inset-0 cursor-pointer z-10"
             onClick={togglePlay}
           />
-          
+
           {/* Overlay gradient */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none z-20" />
-          
+
           {/* Play button overlay - visible when paused */}
           {!isPlaying && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">

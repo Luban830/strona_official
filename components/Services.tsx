@@ -161,7 +161,7 @@ export default function Services() {
       <div className="absolute top-24 left-4 sm:left-8 opacity-15 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={60}
           height={60}
           className="w-8 h-8 sm:w-12 sm:h-12 rotate-45"
@@ -171,7 +171,7 @@ export default function Services() {
       <div className="absolute top-1/3 left-12 sm:left-20 opacity-12 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={50}
           height={50}
           className="w-6 h-6 sm:w-10 sm:h-10 rotate-90"
@@ -181,7 +181,7 @@ export default function Services() {
       <div className="absolute top-1/6 left-20 sm:left-28 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={40}
           height={40}
           className="w-6 h-6 sm:w-8 sm:h-8 rotate-30"
@@ -191,7 +191,7 @@ export default function Services() {
       <div className="absolute bottom-16 right-4 sm:right-8 opacity-15 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={60}
           height={60}
           className="w-8 h-8 sm:w-12 sm:h-12 -rotate-45"
@@ -201,7 +201,7 @@ export default function Services() {
       <div className="absolute bottom-1/3 right-12 sm:right-20 opacity-12 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={50}
           height={50}
           className="w-6 h-6 sm:w-10 sm:h-10 -rotate-90"
@@ -211,7 +211,7 @@ export default function Services() {
       <div className="absolute bottom-1/6 right-20 sm:right-28 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={40}
           height={40}
           className="w-6 h-6 sm:w-8 sm:h-8 -rotate-30"
@@ -221,7 +221,7 @@ export default function Services() {
       <div className="absolute top-1/2 right-8 sm:right-16 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={40}
           height={40}
           className="w-6 h-6 sm:w-8 sm:h-8 rotate-180"
@@ -231,7 +231,7 @@ export default function Services() {
       <div className="absolute bottom-1/4 left-8 sm:left-16 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={40}
           height={40}
           className="w-6 h-6 sm:w-8 sm:h-8"
@@ -241,7 +241,7 @@ export default function Services() {
       <div className="absolute top-2/3 left-16 sm:left-24 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={35}
           height={35}
           className="w-5 h-5 sm:w-7 sm:h-7 rotate-60"
@@ -251,7 +251,7 @@ export default function Services() {
       <div className="absolute bottom-2/3 right-16 sm:right-24 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={35}
           height={35}
           className="w-5 h-5 sm:w-7 sm:h-7 -rotate-60"
@@ -314,10 +314,11 @@ export default function Services() {
                   <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden">
                     <Image
                       src="/1.jpg"
-                      alt="Współpraca"
+                      alt="Współpraca z Lunolab - automatyzacja procesów biznesowych z wykorzystaniem AI"
                       width={800}
                       height={600}
                       className="w-full h-full object-cover hover:scale-105 transition-all duration-300"
+                      loading="lazy"
                     />
                   </div>
                 </div>

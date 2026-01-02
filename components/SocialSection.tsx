@@ -36,12 +36,12 @@ export default function SocialSection() {
 
   return (
     <section className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a] relative">
-      
+
       {/* Moon Logo - decorative elements */}
       <div className="absolute top-16 left-4 sm:left-8 opacity-15 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={50}
           height={50}
           className="w-8 h-8 sm:w-10 sm:h-10"
@@ -51,7 +51,7 @@ export default function SocialSection() {
       <div className="absolute top-1/3 left-12 sm:left-20 opacity-12 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={45}
           height={45}
           className="w-6 h-6 sm:w-9 sm:h-9 rotate-60"
@@ -61,7 +61,7 @@ export default function SocialSection() {
       <div className="absolute top-1/6 left-20 sm:left-28 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={40}
           height={40}
           className="w-6 h-6 sm:w-8 sm:h-8 rotate-90"
@@ -71,7 +71,7 @@ export default function SocialSection() {
       <div className="absolute bottom-16 right-4 sm:right-8 opacity-15 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={50}
           height={50}
           className="w-8 h-8 sm:w-10 sm:h-10 rotate-120"
@@ -81,7 +81,7 @@ export default function SocialSection() {
       <div className="absolute bottom-1/3 right-12 sm:right-20 opacity-12 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={45}
           height={45}
           className="w-6 h-6 sm:w-9 sm:h-9 -rotate-60"
@@ -91,7 +91,7 @@ export default function SocialSection() {
       <div className="absolute bottom-1/6 right-20 sm:right-28 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={40}
           height={40}
           className="w-6 h-6 sm:w-8 sm:h-8 -rotate-90"
@@ -101,7 +101,7 @@ export default function SocialSection() {
       <div className="absolute top-1/2 left-16 sm:left-24 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={35}
           height={35}
           className="w-5 h-5 sm:w-7 sm:h-7 rotate-30"
@@ -111,14 +111,14 @@ export default function SocialSection() {
       <div className="absolute bottom-1/2 right-16 sm:right-24 opacity-10 pointer-events-none z-0">
         <Image
           src="/Moon Logo (1).png"
-          alt="Moon Logo"
+          alt=""
           width={35}
           height={35}
           className="w-5 h-5 sm:w-7 sm:h-7 -rotate-30"
           unoptimized
         />
       </div>
-      
+
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
@@ -147,9 +147,10 @@ export default function SocialSection() {
                   <>
                     <Image
                       src={socialLinks.youtube.imageUrl}
-                      alt="YouTube thumbnail"
+                      alt="YouTube - Lunolab - Filmy o automatyzacji AI i sztucznej inteligencji"
                       fill
                       className="object-cover"
+                      loading="lazy"
                       unoptimized
                     />
                     {/* Dark overlay */}
@@ -166,13 +167,13 @@ export default function SocialSection() {
                     <div className={`absolute inset-0 bg-gradient-to-br ${socialLinks.youtube.color} opacity-0 group-hover:opacity-30 transition-opacity duration-300`}></div>
                   </div>
                 )}
-                
+
                 {/* Icon overlay */}
                 <div className="absolute inset-0 flex items-center justify-center z-10">
                   <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                     <Image
                       src={socialLinks.youtube.iconUrl}
-                      alt="YouTube icon"
+                      alt="Ikona YouTube - Lunolab"
                       width={96}
                       height={96}
                       className="w-full h-full object-contain"
@@ -181,7 +182,7 @@ export default function SocialSection() {
                   </div>
                 </div>
               </div>
-              
+
               {/* Content Section - Bottom */}
               <div className="relative z-10 flex-1 flex flex-col justify-between p-6 sm:p-8 bg-[#111211]">
                 <div>
@@ -189,13 +190,13 @@ export default function SocialSection() {
                   <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-3 group-hover:text-[#27F579] transition-colors duration-300">
                     {socialLinks.youtube.name}
                   </h3>
-                  
+
                   {/* Description */}
                   <p className="text-base sm:text-lg text-gray-300">
                     {socialLinks.youtube.description}
                   </p>
                 </div>
-                
+
                 {/* Arrow indicator */}
                 <div className="flex items-center text-[#27F579] opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-4">
                   <span className="text-sm sm:text-base font-medium">Obejrzyj nasze filmy</span>
@@ -233,9 +234,10 @@ export default function SocialSection() {
                     <>
                       <Image
                         src={socialLinks.skool.imageUrl}
-                        alt="Skool thumbnail"
+                        alt="Skool - Lunolab - Społeczność automatyzacji AI"
                         fill
                         className="object-cover"
+                        loading="lazy"
                         unoptimized
                       />
                       {/* Dark overlay */}
@@ -252,13 +254,13 @@ export default function SocialSection() {
                       <div className={`absolute inset-0 bg-gradient-to-br ${socialLinks.skool.color} opacity-0 group-hover:opacity-30 transition-opacity duration-300`}></div>
                     </div>
                   )}
-                  
+
                   {/* Icon overlay */}
                   <div className="absolute inset-0 flex items-center justify-center z-10">
                     <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <Image
                         src={socialLinks.skool.iconUrl}
-                        alt="Skool icon"
+                        alt="Ikona Skool - Lunolab"
                         width={96}
                         height={96}
                         className="w-full h-full object-contain"
@@ -267,7 +269,7 @@ export default function SocialSection() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Content Section - Bottom */}
                 <div className="relative z-10 flex-1 flex flex-col justify-between p-6 sm:p-8 bg-[#111211]">
                   <div>
@@ -275,13 +277,13 @@ export default function SocialSection() {
                     <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 group-hover:text-[#27F579] transition-colors duration-300">
                       {socialLinks.skool.name}
                     </h3>
-                    
+
                     {/* Description */}
                     <p className="text-sm sm:text-base text-gray-400">
                       {socialLinks.skool.description}
                     </p>
                   </div>
-                  
+
                   {/* Arrow indicator */}
                   <div className="flex items-center text-[#27F579] opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-4">
                     <span className="text-sm font-medium">Dołącz do grupy</span>
@@ -317,9 +319,10 @@ export default function SocialSection() {
                     <>
                       <Image
                         src={socialLinks.tiktok.imageUrl}
-                        alt="TikTok thumbnail"
+                        alt="TikTok - Lunolab - Krótkie filmy o automatyzacji AI"
                         fill
                         className="object-cover"
+                        loading="lazy"
                         unoptimized
                       />
                       {/* Dark overlay */}
@@ -336,13 +339,13 @@ export default function SocialSection() {
                       <div className={`absolute inset-0 bg-gradient-to-br ${socialLinks.tiktok.color} opacity-0 group-hover:opacity-30 transition-opacity duration-300`}></div>
                     </div>
                   )}
-                  
+
                   {/* Icon overlay */}
                   <div className="absolute inset-0 flex items-center justify-center z-10">
                     <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                       <Image
                         src={socialLinks.tiktok.iconUrl}
-                        alt="TikTok icon"
+                        alt="Ikona TikTok - Lunolab"
                         width={96}
                         height={96}
                         className="w-full h-full object-contain"
@@ -351,7 +354,7 @@ export default function SocialSection() {
                     </div>
                   </div>
                 </div>
-                
+
                 {/* Content Section - Bottom */}
                 <div className="relative z-10 flex-1 flex flex-col justify-between p-6 sm:p-8 bg-[#111211]">
                   <div>
@@ -359,13 +362,13 @@ export default function SocialSection() {
                     <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 group-hover:text-[#27F579] transition-colors duration-300">
                       {socialLinks.tiktok.name}
                     </h3>
-                    
+
                     {/* Description */}
                     <p className="text-sm sm:text-base text-gray-400">
                       {socialLinks.tiktok.description}
                     </p>
                   </div>
-                  
+
                   {/* Arrow indicator */}
                   <div className="flex items-center text-[#27F579] opacity-0 group-hover:opacity-100 transition-opacity duration-300 mt-4">
                     <span className="text-sm font-medium">Śledź nas</span>

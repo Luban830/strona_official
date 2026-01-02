@@ -83,7 +83,7 @@ export default function Navbar() {
           >
             <Image
               src="/logo_lunolab.png"
-              alt="Lunolab"
+              alt="Lunolab - Automatyzacja procesów AI dla firm"
               width={180}
               height={60}
               className="h-12 w-auto"
@@ -107,6 +107,7 @@ export default function Navbar() {
                       ? 'text-[#27F579]'
                       : 'text-gray-300 hover:text-[#27F579]'
                   }`}
+                  aria-label={`Przejdź do sekcji ${link.label}`}
                 >
                   {link.label}
                 </Link>
