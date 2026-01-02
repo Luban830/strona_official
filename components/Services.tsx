@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { NoiseBackground } from '@/components/ui/noise-background'
-import MagicBento from './MagicBento'
+import Feature3 from './Feature3'
 
 // Komponent z animowanym przechodzeniem przez kroki z suwakiem
 function AnimatedStepsBox({
@@ -156,8 +156,110 @@ export default function Services() {
   }, [openModal])
 
   return (
-    <section id="uslugi" className="pt-16 pb-24 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a]">
-      <div className="max-w-7xl mx-auto">
+    <section id="uslugi" className="pt-16 pb-24 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a] relative">
+      {/* Moon Logo - decorative elements */}
+      <div className="absolute top-24 left-4 sm:left-8 opacity-15 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={60}
+          height={60}
+          className="w-8 h-8 sm:w-12 sm:h-12 rotate-45"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-1/3 left-12 sm:left-20 opacity-12 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={50}
+          height={50}
+          className="w-6 h-6 sm:w-10 sm:h-10 rotate-90"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-1/6 left-20 sm:left-28 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8 rotate-30"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-16 right-4 sm:right-8 opacity-15 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={60}
+          height={60}
+          className="w-8 h-8 sm:w-12 sm:h-12 -rotate-45"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-1/3 right-12 sm:right-20 opacity-12 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={50}
+          height={50}
+          className="w-6 h-6 sm:w-10 sm:h-10 -rotate-90"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-1/6 right-20 sm:right-28 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8 -rotate-30"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-1/2 right-8 sm:right-16 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8 rotate-180"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-1/4 left-8 sm:left-16 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-2/3 left-16 sm:left-24 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={35}
+          height={35}
+          className="w-5 h-5 sm:w-7 sm:h-7 rotate-60"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-2/3 right-16 sm:right-24 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={35}
+          height={35}
+          className="w-5 h-5 sm:w-7 sm:h-7 -rotate-60"
+          unoptimized
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
 
         {/* Header */}
         <div className="mb-16">
@@ -166,68 +268,13 @@ export default function Services() {
           </p>
           <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight max-w-3xl">
             Twój Zaufany Partner<br />
-            <span className="text-[#27F579]">w Transformacji AI</span>
+            <span className="bg-gradient-to-r from-[#27F579] via-[#20c46a] to-[#1a7a4a] bg-clip-text text-transparent">w Transformacji AI</span>
           </h2>
         </div>
 
-        {/* Magic Bento Cards */}
-        <MagicBento
-          textAutoHide={true}
-          enableStars={true}
-          enableSpotlight={true}
-          enableBorderGlow={true}
-          enableTilt={true}
-          enableMagnetism={true}
-          clickEffect={true}
-          spotlightRadius={300}
-          particleCount={12}
-          glowColor="39, 245, 121"
-        />
+        {/* Feature Cards */}
+        <Feature3 />
 
-        {/* Ways of collaboration */}
-        <div className="mt-24">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Działamy na dwa sposoby
-            </h3>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Wybierz formę współpracy, która najlepiej odpowiada Twoim potrzebom
-            </p>
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-0 mt-12">
-            <div className="flex-1">
-              <AnimatedStepsBox
-                title="Współpraca długoterminowa"
-                steps={[
-                  { step: 1, label: 'Konsultacja' },
-                  { step: 2, label: 'Analiza potrzeb' },
-                  { step: 3, label: 'Wdrożenie' },
-                  { step: 4, label: 'Wsparcie i optymalizacja' },
-                ]}
-                onOpenModal={() => setOpenModal('long-term')}
-              />
-            </div>
-
-            {/* Divider - horizontal on mobile, vertical on desktop */}
-            <div className="flex items-center justify-center py-8 md:py-0 md:px-8">
-              <div className="w-full h-px md:w-px md:h-full min-h-0 md:min-h-[500px] bg-gradient-to-r md:bg-gradient-to-b from-transparent via-[#27F579]/40 to-transparent"></div>
-            </div>
-
-            <div className="flex-1">
-              <AnimatedStepsBox
-                title="Dostarczanie jednorazowego produktu"
-                steps={[
-                  { step: 1, label: 'Brief' },
-                  { step: 2, label: 'Projektowanie' },
-                  { step: 3, label: 'Realizacja' },
-                  { step: 4, label: 'Dostarczenie' },
-                ]}
-                onOpenModal={() => setOpenModal('one-time')}
-              />
-            </div>
-          </div>
-        </div>
 
         {/* Modal */}
         {openModal && (

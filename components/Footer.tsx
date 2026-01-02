@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="text-2xl font-bold text-[#27F579] mb-4">Lunolab</h3>
+            <h3 className="text-2xl font-bold bg-gradient-to-r from-[#27F579] via-[#20c46a] to-[#1a7a4a] bg-clip-text text-transparent mb-4">Lunolab</h3>
             <p className="text-gray-400">
               Automatyzujemy przyszłość z AI. Tworzymy inteligentne rozwiązania
               dla Twojego biznesu.

@@ -41,3 +41,4 @@ INSERT INTO projects (title, description, client_name, category, image_url) VALU
 -- Jeśli chcesz, aby tabela była publicznie dostępna do odczytu:
 -- CREATE POLICY "Public read access" ON projects FOR SELECT USING (true);
 
+

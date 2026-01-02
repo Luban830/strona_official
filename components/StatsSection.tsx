@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useCallback, useState } from 'react'
 import { gsap } from 'gsap'
+import Image from 'next/image'
 import '@/components/MagicBento.css'
 
 const DEFAULT_PARTICLE_COUNT = 8
@@ -203,13 +204,75 @@ function StatCard({ label, value, particleCount = DEFAULT_PARTICLE_COUNT, glowCo
 
 export default function StatsSection() {
   return (
-    <section className="-mt-32 pb-16 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a] relative">
+    <section className="-mt-16 sm:-mt-24 lg:-mt-28 pb-16 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a] relative z-20">
       {/* Bottom gradient */}
       <div className="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-[#0a0b0a] to-transparent pointer-events-none"></div>
 
+      {/* Moon Logo - decorative elements */}
+      <div className="absolute top-1/2 right-4 sm:right-8 -translate-y-1/2 opacity-15 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={60}
+          height={60}
+          className="w-8 h-8 sm:w-12 sm:h-12"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-1/4 left-4 sm:left-8 opacity-12 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={50}
+          height={50}
+          className="w-6 h-6 sm:w-10 sm:h-10 rotate-45"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-1/4 right-8 sm:right-12 opacity-12 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={50}
+          height={50}
+          className="w-6 h-6 sm:w-10 sm:h-10 -rotate-45"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-1/6 left-12 sm:left-20 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8 rotate-90"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-1/6 right-16 sm:right-24 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8 -rotate-90"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-2/3 left-8 sm:left-16 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={35}
+          height={35}
+          className="w-5 h-5 sm:w-7 sm:h-7 rotate-30"
+          unoptimized
+        />
+      </div>
+
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-row gap-2">
-          <div className="flex-1">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-2">
+          <div className="flex-1 min-w-0">
             <StatCard
               label="Zaoszczędzony czas"
               value="100+ godzin miesięcznie"
@@ -217,7 +280,7 @@ export default function StatsSection() {
               glowColor="39, 245, 121"
             />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <StatCard
               label="Zaoszczędzone pieniądze"
               value="3 tys. złotych miesięcznie"
@@ -225,7 +288,7 @@ export default function StatsSection() {
               glowColor="39, 245, 121"
             />
           </div>
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <StatCard
               label="Skalowalność procesów"
               value="+40 nowych klientów miesięcznie"

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Carousel } from '@/components/ui/carousel'
 
@@ -165,8 +166,112 @@ function ProjectCard({ project }: { project: typeof projects[0] }) {
 
 export default function CaseStudies() {
   return (
-    <section id="case-studies" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a]">
-      <div className="max-w-7xl mx-auto">
+    <section id="case-studies" className="py-16 sm:py-20 md:py-24 px-4 sm:px-6 lg:px-8 bg-[#0a0b0a] relative">
+      {/* Subtle grid pattern */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#27F57910_1px,transparent_1px),linear-gradient(to_bottom,#27F57910_1px,transparent_1px)] bg-[length:60px_60px]"></div>
+      {/* Moon Logo - decorative elements */}
+      <div className="absolute top-20 left-4 sm:left-8 opacity-15 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={50}
+          height={50}
+          className="w-8 h-8 sm:w-10 sm:h-10"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-1/3 left-12 sm:left-20 opacity-12 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={45}
+          height={45}
+          className="w-6 h-6 sm:w-9 sm:h-9 rotate-45"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-1/6 left-20 sm:left-28 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8 rotate-60"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-20 right-4 sm:right-8 opacity-15 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={50}
+          height={50}
+          className="w-8 h-8 sm:w-10 sm:h-10 rotate-90"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-1/3 right-12 sm:right-20 opacity-12 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={45}
+          height={45}
+          className="w-6 h-6 sm:w-9 sm:h-9 -rotate-45"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-1/6 right-20 sm:right-28 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8 -rotate-60"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-1/2 right-8 sm:right-16 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8 rotate-30"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-1/4 left-8 sm:left-16 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={40}
+          height={40}
+          className="w-6 h-6 sm:w-8 sm:h-8 -rotate-30"
+          unoptimized
+        />
+      </div>
+      <div className="absolute top-2/3 left-16 sm:left-24 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={35}
+          height={35}
+          className="w-5 h-5 sm:w-7 sm:h-7 rotate-120"
+          unoptimized
+        />
+      </div>
+      <div className="absolute bottom-2/3 right-16 sm:right-24 opacity-10 pointer-events-none z-0">
+        <Image
+          src="/Moon Logo (1).png"
+          alt="Moon Logo"
+          width={35}
+          height={35}
+          className="w-5 h-5 sm:w-7 sm:h-7 -rotate-120"
+          unoptimized
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -175,7 +280,7 @@ export default function CaseStudies() {
           className="text-center mb-10 sm:mb-12 md:mb-16"
         >
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4">
-            Nasze <span className="text-[#27F579] neon-glow">projekty</span>
+            Nasze <span className="bg-gradient-to-r from-[#27F579] via-[#20c46a] to-[#1a7a4a] bg-clip-text text-transparent">projekty</span>
           </h2>
           <p className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto px-4">
             Zobacz jak pomagamy firmom osiągać lepsze rezultaty
